@@ -44,7 +44,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-display);
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
   min-height: 100vh;
 }
 
@@ -61,34 +61,6 @@ body::before {
 
 ::selection { background: var(--cyan-glow); color: #fff; }
 
-/* ==========================================
-   CUSTOM CURSOR
-   ========================================== */
-#cursor {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  background: var(--cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
-  mix-blend-mode: screen;
-  box-shadow: 0 0 16px var(--cyan), 0 0 32px var(--cyan-glow);
-}
-#cursor-trail {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, left 0.12s ease, top 0.12s ease;
-}
-body:hover #cursor { opacity: 1; }
 
 /* ==========================================
    SCROLLBAR
@@ -252,7 +224,7 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   display: none;
   flex-direction: column;
   gap: 5px;
-  cursor: none;
+  cursor: pointer;
   padding: 4px;
 }
 .hamburger span {
@@ -411,7 +383,6 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   border-radius: 8px;
   letter-spacing: 0.04em;
   transition: transform 0.2s, box-shadow 0.2s;
-  cursor: none;
 }
 .btn-primary:hover {
   transform: translateY(-2px);
@@ -430,7 +401,6 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   border-radius: 8px;
   letter-spacing: 0.04em;
   transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-  cursor: none;
 }
 .btn-outline:hover {
   transform: translateY(-2px);
@@ -573,8 +543,6 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   color: var(--text-muted);
   text-transform: uppercase;
 }
-
-.skills-panel { }
 
 .skill-group { margin-bottom: 2rem; }
 .skill-group-title {
@@ -761,7 +729,7 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   color: var(--cyan);
   letter-spacing: 0.06em;
   transition: gap 0.2s, opacity 0.2s;
-  cursor: none;
+  cursor: pointer;
 }
 .btn-view:hover { gap: 0.7rem; }
 .btn-view svg { transition: transform 0.2s; }
@@ -1069,7 +1037,7 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   box-shadow: 0 0 16px var(--cyan-glow);
 }
 
-.contact-detail { }
+
 .contact-detail-label {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -1122,7 +1090,7 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   outline: none;
   transition: border-color 0.25s, box-shadow 0.25s;
   resize: none;
-  cursor: none;
+  cursor: text;
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-muted); }
@@ -1147,7 +1115,6 @@ section { padding: clamp(5rem, 8vw, 9rem) 0; }
   border: none;
   border-radius: 8px;
   letter-spacing: 0.06em;
-  cursor: none;
   transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
   align-self: flex-start;
 }
@@ -1287,10 +1254,6 @@ footer {
 </style>
 </head>
 <body>
-
-<!-- Custom Cursor -->
-<div id="cursor"></div>
-<div id="cursor-trail"></div>
 
 <!-- Mobile Menu Overlay -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -1902,42 +1865,6 @@ footer {
      JAVASCRIPT
      ========================================== -->
 <script>
-/* ==========================================
-   CURSOR
-   ========================================== */
-const cursor = document.getElementById('cursor');
-const trail = document.getElementById('cursor-trail');
-let mx = 0, my = 0, tx = 0, ty = 0;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-});
-
-function animateTrail() {
-  tx += (mx - tx) * 0.15;
-  ty += (my - ty) * 0.15;
-  trail.style.left = tx + 'px';
-  trail.style.top = ty + 'px';
-  requestAnimationFrame(animateTrail);
-}
-animateTrail();
-
-document.querySelectorAll('a, button, .project-card, .skill-tag').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.width = '20px';
-    cursor.style.height = '20px';
-    trail.style.width = '52px';
-    trail.style.height = '52px';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.width = '12px';
-    cursor.style.height = '12px';
-    trail.style.width = '36px';
-    trail.style.height = '36px';
-  });
-});
 
 /* ==========================================
    PARTICLE CANVAS
